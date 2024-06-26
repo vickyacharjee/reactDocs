@@ -102,6 +102,19 @@ root.render(<HeadingComponent/>);
 ```
 NOTE: Component Composition is composing of component inside one another
 
+
+```
+```
+NOTE: for injecting variable inside component (mainly functional component) so we inject like this:  
+
+const variable=<h1>Hello from variable</h2> //declared a JSX in an Element 
+
+const FuncComponent=>{
+    return(
+        <div>{variable}</div> //here we have included/ejected/inserted the react element inside func component
+    )
+}
+
 ```
 
 

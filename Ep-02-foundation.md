@@ -98,9 +98,9 @@ const HeadingComponent=()=>(
 const root=ReactDOM.createRoot(document.getElementById('root'));
 root.render(<HeadingComponent/>);
 
+```
+```
 NOTE: Component Composition is composing of component inside one another
-```
-```
 
 ```
 

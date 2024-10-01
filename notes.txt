@@ -8,12 +8,12 @@
     ● Components
     ● Functional Components
     ○ Composing Component
-
+--------------------------------------------------------------------------------------------------------------
   -jsx:
     JSX is a syntax extension for JavaScript that allows you to write HTML-like code in your JavaScript files.
     JSX is a way to write HTML in JavaScript files.
   
--React.createElement vs JSX:
+ -React.createElement vs JSX:
     JSX is a syntax extension for JavaScript that allows you to write HTML-like markup inside a JavaScript file. It's a more concise and readable way to create React elements.
      Example: const h1 = <h1>Hello world</h1>;
         JSX is an transpiller React element
@@ -31,7 +31,7 @@
 
         Both Together:
         JSX[Babel] => ReactElement => javaScript[Object] =>HTML(Render)
-
+--------------------------------------------------------------------------------------------------------------
 -Benefits of JSX:
     -Simplifies code and makes it more elegant
     -Easier to create and maintain React components
@@ -39,7 +39,7 @@
     -Allows React to show more useful error and warning messages
     -Faster than normal JavaScript code due to optimizations
     -Easy to use for those familiar with HTML
-
+--------------------------------------------------------------------------------------------------------------
 -components:
  Components are reusable pieces of code that represent UI elements or a portion of your application.
  There are two types of components:
@@ -88,6 +88,7 @@
                  </div>    
                 )
             }
+--------------------------------------------------------------------------------------------------------------
 
 -Embeding the javaScript into an JSX:
  To embed a js into jsx we need to use curly braces i.e {}
@@ -102,7 +103,346 @@
             {console.log(num)}//10 will get to se in console
             </div>
         )
-}    
+    }   
+    //Note: we can even embedd another component to one, using {} Braces to render:
+    
+    const Inner=()=>{
+        return(
+            <Heading></Heading> // This the other way to render external Heading component.
+        )
+    }
+    // Another way is:
+    const Inner=()=>{
+        return(
+            {Heading()} // This the way to render external Heading component.
+        )
+    } // Note: So far we know 3 way to embed external component.
+        1. <Title/>
+        2. <Title></Title>
+        3. {Title()}
+      
+      // Adding style to JSX:
+       const styleObj={bgc:"red"}
+       const Style=()=>{
+        return(
+            <div style={styleObj}> or directle embed as style={{bgc:"red"}}
+            <Heading></Heading> // This the other way to render external Heading component.
+            </div>
+        )
+    }
+       
+--------------------------------------------------------------------------------------------------------------    
+
+--Props in React:
+ Props are an important concept to understand in React. You use props to pass data and values from one component to another to get dynamic and unique outputs
+ in simple terms: passing a props to a function is exactly just like passing an argument to a function.
+
+ Syntax:
+ // argument <App data={} key{} />
+ // parameter function(props)
+    props are the properties  passed as an object
+
+    Example:
+    //passing as argument
+    const App=()=>{
+        return(
+            <div>
+            <Heading name="John" age={25} />
+            </div>
+        )
+    }
+    // passing as parameter
+    const Heading=(props)=>{
+        const {name,age}=props; // destructure on the go.
+        return(
+        <h1>{name}</h1>
+        <h1>{age}</h1>
+        )
+    }        
+    // Another way is: // we mostly use this approach
+    //Directly declaring in the parameter itself.
+    const Heading=({name,age})=>{  
+        return(
+        <h1>{name}</h1>
+        <h1>{age}</h1>
+        )
+    }   
+--------------------------------------------------------------------------------------------------------------    
+
+-- Importance of key in props:
+    In React, when you render a list of items, each item in the 
+    list needs a unique identifier, known as a key.
+    This key is a special prop that helps React keep track of the 
+    items in the list and optimize the rendering process.
+
+    //Here are some reasons why the key is important:
+
+    -Efficient rendering: When the state of the list changes, 
+    React needs to determine which items have changed and re-render only those items.
+    The key helps React to identify which items have changed and update the DOM accordingly.
+   
+    -Prevents unnecessary re-renders: Without a key, React would re-render the entire
+     list every time the state changes, which can be inefficient and slow. 
+     By using a key, React can skip re-rendering items that haven't changed.
+    
+Note:Helps with reconciliation: When the list changes, React uses the key to reconcile
+    the differences between the previous and next lists. 
+    This process is called reconciliation.
+    
+    -Prevents errors: If you don't provide a key, 
+    React will throw a warning or error, indicating that you need to 
+    provide a unique key for each item in the list.
+
+    //Best practices for using key in React:
+
+    -Use a unique identifier for each item in the list, such as an ID or a unique string.
+    
+    -Avoid using the array index as a key, as it can cause issues when the list is re-ordered
+    or items are added/removed.
+    
+    -Use a stable key that doesn't change when the item's data changes.
+    Note: if no key is provided then the new object is appended on the 0th index and reconciliation happens
+
+   Note: nokey < IndexOfArray < uniqueKeyInObject
+--------------------------------------------------------------------------------------------------------------
+
+--Config Driven UI:
+    A config-driven UI is where the user interface is dynamically generated based on a configuration file,
+     usually JSON. Instead of hardcoding every component, we define elements like buttons or input fields 
+     in the config, and the UI is rendered based on that.
+
+    For example, I built a dynamic form where fields like text inputs or dropdowns were controlled through
+    a JSON file. If the requirements changed, we only needed to update the config, not the code—making the 
+    UI flexible and easy to maintain.
+--------------------------------------------------------------------------------------------------------------    
+
+-- File structure in React:
+  -components:
+    -containers
+    -actions
+    -reducers
+    -store
+    -utils
+    -index.js
+    -App.js
+    -index.css
+    -package.json
+
+    Note: Src, in src we store, all the components (Remember to shift index.html as .src/app.js)
+          App.js is the main component, whhich is rendering all the component.
+          -Index.js or App.js is the entry point of the application. Note: just the name convention.
+    
+    Note: Utils, contains all the env files, CDN links, external links.
+--------------------------------------------------------------------------------------------------------------  
+
+-- Export and Import:
+    -Named-Export:
+    With named exports, you can export multiple variables, functions, or objects from a module.
+    These must be imported with the exact same name from the module.
+
+    Example: named export and import
+    Export:
+    export const add = (a, b) => a + b;
+    export const subtract = (a, b) => a - b;
+    
+    Import:
+    import { add, subtract } from './math';
+
+    console.log(add(2, 3));       // Outputs: 5
+    console.log(subtract(5, 3));  // Outputs: 2
+    
+    -Default Export:
+    A default export is used when a module exports a single item, and it can be imported without using curly braces.
+    Example: Default export and import
+    Export:
+    const multiply = (a, b) => a * b;
+    export default multiply;
+    
+    Import:
+    import multiply from './math';
+
+    console.log(multiply(4, 5));  // Outputs: 20
+--------------------------------------------------------------------------------------------------------------    
+
+--Hooks in React:
+     React hooks are functions that allow functional components to manage state and side effects,
+     features that were previously only possible in class components. Hooks make functional components more
+     powerful and easier to use by eliminating the need for lifecycle methods and this keyword.
+
+    why React hooks:
+    Before hooks, React developers relied on class components to manage state and lifecycle events like componentDidMount, componentDidUpdate, 
+    and componentWillUnmount. Hooks provide a simpler, cleaner way to manage these without having to deal with class syntax or lifecycle complexities.
+
+    React supports many types of hooks:
+    1. useState: This hook is used to add state to functional components.
+    2. useEffect: It allows you to perform side effects in functional components, such as data fetching, updating the DOM, or setting up subscriptions.
+    3. useContext: This hook is used to access context in functional components.
+    4. seContext, useReducer, and Custom Hooks:Apart from these, there are other hooks like useContext for accessing global data, useReducer for handling complex state logic,
+       and the ability to create custom hooks for reusing logic across components.
+--------------------------------------------------------------------------------------------------------------
+
+--useState:
+    useState is a React hook that allows functional components to have and manage state. It was introduced in React 16.8, and it's one of the most commonly used hooks because 
+    it provides a simple way to store and update values that change over time, like user input, component status, or API data.
+
+    How It Works:
+    "When you call useState, it returns an array with two elements:
+
+    1. The current state value – This is the actual value of the state.
+    2. A function to update that value – You use this function to modify the state when needed,
+       which also triggers a re-render of the component to reflect the new value.
+
+    Syntax:
+    const [state, setState] = useState(initialValue);
+    -initialValue: This is the initial value of the state. It can be any value,
+    including an object, array, or even a function.
+    -state: This is the current state value.
+    -setState: This is the function to update the state value.
+
+    // confusion [state, setState] is nothing extraOrdinary, its just a list of array..arr[0] and arr[1]
+    likeWise:
+    const arr=useState();
+
+    let [state,setState]=arr;
+            OR
+    let state=arr[0];
+    let setState=arr[1];
+
+    Example:
+        import React, { useState } from 'react';
+
+        function Counter() {
+        // Initializing state with 0 as the initial value
+        const [count, setCount] = useState(0);
+
+        return (
+            <div>
+            <p>Current count: {count}</p>
+            {/* When the button is clicked, the count is incremented */}
+            <button onClick={() => setCount(count + 1)}>
+                Increment
+            </button>
+            </div>
+        );
+        }
+--------------------------------------------------------------------------------------------------------------
+
+--Data Layer and UI Layer in React.
+    In React, the data layer is responsible for managing application data and business logic,
+    while the UI layer focuses on rendering and interacting with the user interface. 
+    Separating these concerns makes the application easier to maintain and scale.
+--------------------------------------------------------------------------------------------------------------
+
+--Virtual Dom in React:
+    The Virtual DOM (Document Object Model) is a concept used in React to optimize the performance of web applications. 
+    Instead of directly interacting with the real DOM, React uses the Virtual DOM as a lightweight representation of the actual DOM.
+
+    Note: Virtual DOM is the representation of actual DOM.
+
+    Key Concepts of the Virtual DOM in React:
+    ->Virtual DOM Representation: The Virtual DOM is a JavaScript object that represents the structure of the real DOM. 
+    When a React component is rendered or updated, React creates a virtual copy of the real DOM in memory, representing the current state of the UI.
+
+    ->Efficient Updates: When the state or props of a component change, React doesn't immediately update the real DOM.
+    Instead, it creates a new Virtual DOM tree and compares it with the previous one using a process called reconciliation.
+    This comparison allows React to determine the minimal set of changes required.
+
+    ->Reconciliation: During reconciliation, React uses a diffing algorithm to compare the new Virtual DOM with the old one.
+    It identifies the differences (called "diffs") between the two trees and calculates the most efficient way to update the real DOM.
+
+    ->Batch Updates: Instead of making multiple updates to the real DOM (which can be slow), React batches these updates and applies them
+    in one go. This reduces the number of real DOM manipulations, leading to better performance.
+
+    ->Updating the Real DOM: After identifying the minimal changes needed, React updates only the parts of the real DOM that have changed.
+    This selective updating is much faster than re-rendering the entire UI.
+--------------------------------------------------------------------------------------------------------------
+
+--Reconciliation Algorithm (ReactFibre):
+  React, reconciliation refers to the process of efficiently updating the user interface when the state or props of a component change.
+  React employs a diffing algorithm to compare the new virtual DOM with the previous one, determining the minimal number of updates required
+  to apply the changes. This is a core part of how React optimizes rendering performance, making UI updates fast and efficient.
+
+     Key Concepts Behind Reconciliation:
+     Virtual DOM: React keeps a lightweight representation of the actual DOM, known as the virtual DOM. When a component's state or props change,
+     React creates a new virtual DOM tree, compares it with the previous one, and determines what needs to be updated on the actual DOM.
+
+    Diffing Algorithm: The core of React’s reconciliation is its diffing algorithm. It compares the previous virtual DOM with the current
+    one and calculates the difference (called "diffs"). Based on this, it updates only the changed elements in the real DOM.
+
+    Key Mechanism: When rendering lists, React relies on the key property to efficiently track and identify elements that have changed,
+    been added, or removed. Keys are critical for minimizing re-renders and ensuring stable identity across renders.
+
+    Updates and Batching: React batches updates to minimize re-renders. It consolidates multiple updates into one batch, preventing unnecessary renders
+    and improving performance.
+
+
+                                        The Reconciliation Process Step-by-Step:
+                                        Here’s how the reconciliation algorithm works in React:
+
+    Initial Render:React builds the entire virtual DOM tree based on the initial render.
+    It then uses this tree to render the real DOM for the first time.
+                  
+    Subsequent Renders (when state or props change):When the state or props change, React creates a new virtual DOM tree.
+    React compares the new virtual DOM tree with the previous one (this is the "diffing" step).
+    React identifies the differences between the two trees and applies only the necessary changes to the real DOM.
+    Node Comparison:
+
+    Same Element Type: If two elements of the same type are compared, React checks for differences in attributes, props, or children.
+    Only the differing parts are updated.
+   
+    Different Element Type: If two elements have different types, React will unmount the old component and mount a new one, 
+    destroying the previous DOM node and creating a new one.
+    
+    Keys in Lists: When comparing lists of elements, React uses the key property to identify each element uniquely. 
+    This helps React know which items have changed, been added, or removed without having to re-render the entire list.
+
+
+    Example, simple demonstration of reconcialation is:
+    
+    virtualDom[old component] => diffAlgorithm[chanes made btw uilayer and dataLayer] => virtualDom[New component] 
+    ThereFore:
+    virtualDom[old component]: there is an old component, and it has its own virtual DOM.
+
+    diffAlgorithm: this is the algorithm that compares the old virtual DOM with the new virtual DOM, it basically keeps a continous sync 
+    btw UI layer and the Data Layer. since, any changes made, it immediately renders with the new one.
+
+    virtualDom[New component]: the new component, comes right after the manipulations. 
+--------------------------------------------------------------------------------------------------------------
+
+-- why react is best:
+   React is best in the market, since it has the faster dom manipulations.
+   It has the best reconciliation algorithm, which is the diffing algorithm.
+   It has the best virtual DOM, which is the lightweight representation of the actual DOM.
+   It has the best key mechanism, which is the key property.
+   It has the best updates and batching, which is the consolidation of multiple updates into one batch.
+   It has the best node comparison, which is the comparison of two elements of the same type.
+--------------------------------------------------------------------------------------------------------------
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+
+                
 
 
         
